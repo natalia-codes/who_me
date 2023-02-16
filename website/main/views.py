@@ -11,6 +11,13 @@ from .models import Post
 def home(request):
     posts = Post.objects.all()
 
+    if request.method == "POST":
+        post_id = request.POST.get("i-id")
+        # print(post_id)
+        post = Post.objects.filter(id=post_id).first()
+        if post and post.author == request.user:
+            post.delete()
+
     return render(request, 'main/home.html', {"posts": posts})
 
 @login_required(login_url="/login")
