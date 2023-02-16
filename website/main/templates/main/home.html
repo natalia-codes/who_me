@@ -18,6 +18,10 @@
         {% endif %}
         {% comment %} ban users: {% endcomment %}
         {% if user.is_staff %}
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-warning" name="user-id" value="{{i.author.id}}" style="margin:5px;">BAN</button>
+        </form>
         {% endif %}
         </div>
     </div>
