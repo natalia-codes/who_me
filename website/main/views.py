@@ -25,13 +25,17 @@ def home(request):
             user = User.objects.filter(id=user_id).first()
             # ban user by removing them from the group perms
             if user and request.user.is_staff:
-                group = Group.objects.filter(name='default')
-                group.user_set.remove(user)
+                try:
+                    group = Group.objects.filter(name='default')
+                    group.user_set.remove(user)
+                except:
+                    pass
+                try:
                 # remove from mod group in case they are a mod too
-                group = Group.objects.filter(name='mod')
-                group.user_set.remove(user)
-
-
+                    group = Group.objects.filter(name='mod')
+                    group.user_set.remove(user)
+                except:
+                    pass
 
     return render(request, 'main/home.html', {"posts": posts})
 
